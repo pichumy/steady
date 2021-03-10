@@ -29,6 +29,13 @@ class Dashboard extends React.Component<Props, State>{
       turbulence: false,
       data: []
     }
+    this.handleInput = this.handleInput.bind(this);
+    this.handleCheckbox = this.handleCheckbox.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.clear = this.clear.bind(this);
+  }
+  writeToTextfile(){
+
   }
   handleInput(type: keyof State) {
     return (e:any) => {
@@ -50,21 +57,30 @@ class Dashboard extends React.Component<Props, State>{
   handleSubmit(){
     let currentData = this.state.data;
     currentData.push([
-      `name: ${this.state.name}`,
-      `description: ${this.state.description}`,
-      `fluid_velocity: ${this.state.fluid_velocity}`,
-      `fluid_pressure: ${this.state.fluid_pressure}`,
-      `turbulence: ${this.state.turbulence}`
+      `name: ${this.state.name}
+      description: ${this.state.description}
+      fluid_velocity: ${this.state.fluid_velocity}
+      fluid_pressure: ${this.state.fluid_pressure}
+      turbulence: ${this.state.turbulence}\n`
     ]);
     this.setState({
       data: currentData
+    })
+  }
+  clear(){
+    this.setState({
+      name: '',
+      description: '',
+      fluid_velocity: 0,
+      fluid_pressure: 0,
+      turbulence: false,
+      data: []
     })
   }
   render(){
     return(
       <div className="dashboard-container">
         <div className="sidebar-container">
-          <div className="form-container">
             <div className="input-title">Simulation Name</div>
             <input
               className="input-default"
@@ -99,7 +115,12 @@ class Dashboard extends React.Component<Props, State>{
               onChange={this.handleCheckbox}
               checked={this.state.turbulence}
               />
-          </div>
+              <button className="submit-button" onClick={this.handleSubmit}>
+                <div className="button-content">Submit</div>
+              </button>
+              <button className="submit-button" onClick={this.clear}>
+                <div className="button-content">Clear</div>
+              </button>
         </div>
         <div className="main-content">
         {this.state.data}

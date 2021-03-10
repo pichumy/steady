@@ -1,5 +1,4 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
 import { History } from 'history';
 
 type Props = {
@@ -27,6 +26,8 @@ class LoginForm extends React.Component<Props, State> {
       password: '',
       error: '',
     }
+    this.handleInput = this.handleInput.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
   handleInput(type: keyof State) {
     return (e:any) => {
@@ -59,6 +60,7 @@ class LoginForm extends React.Component<Props, State> {
           onChange={this.handleInput('password')}
           value={this.state.password}>
         </input>
+        {this.state.error}
         <button className="submit-button" onClick={this.handleSubmit}>
           <div className="button-content">Submit</div>
         </button>
